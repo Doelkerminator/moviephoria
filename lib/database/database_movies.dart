@@ -20,17 +20,11 @@ class DatabaseMovies {
   static _initDatabase() async {
     Directory folder = await getApplicationDocumentsDirectory();
     String routeDB = join(folder.path, _nameDB);
-    print(routeDB);
     return await openDatabase(
       routeDB,
       version: _versionDB,
       onCreate: _createTables,
     );
-  }
-
-  static matasteAMiPadre()  async{
-    var dbConnection = await database;
-    dbConnection!.delete('DROP DATABASE MovieDB');
   }
 
   static _createTables(Database db, int version) {
@@ -52,20 +46,17 @@ class DatabaseMovies {
 
   static void insert(Map<String, dynamic> row) async {
     var dbConnection = await database;
-    print('Melocomi: $row');
     dbConnection!.insert("fav_movies", row);
   }
 
   static void delete(int idMovie) async {
     var dbConnection = await database;
-    print('Loborre');
     dbConnection!.delete("fav_movies", where: "id = ?", whereArgs: [idMovie]);
   }
 
   static Future<List<Movie>> getAllFavMovies() async {
     var dbConnection = await database;
     var result = await dbConnection!.query("fav_movies");
-    print(result);
     return result.map((movie) => Movie.fromMap(movie)).toList();
   }
 
@@ -73,11 +64,9 @@ class DatabaseMovies {
     var dbConnection = await database;
     int? ye = Sqflite.firstIntValue(await dbConnection!.rawQuery('SELECT COUNT(*) FROM fav_movies WHERE id = $idMovie'));
     if(ye == 1) {
-      print('Megusta');
       return true;
     }
     else {
-      print('Nomegusta');
       return false;
     }
   }

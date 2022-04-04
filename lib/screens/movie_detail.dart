@@ -245,7 +245,6 @@ class _MovieDetail extends State<MovieDetail> {
                       }
                       else {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          print('Zambombazo');
                           return _castList(snapshot.data!);
                         }
                         else {

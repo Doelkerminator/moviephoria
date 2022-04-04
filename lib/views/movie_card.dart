@@ -10,7 +10,6 @@ class CardMovie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('https://image.tmdb.org/t/p/w500/${movie!.backdropPath}');
     return Container(
       decoration: const BoxDecoration(
         boxShadow: [

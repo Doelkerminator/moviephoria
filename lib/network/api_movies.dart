@@ -21,35 +21,40 @@ class ApiMovies {
     }
   }
 
-  Future<Movie?> getMovieDetails(int idMovie) async {
+  static Future<Movie?> getMovieDetails(int idMovie) async {
     var URL = Uri.parse(
       'https://api.themoviedb.org/3/movie/$idMovie?api_key=2f8c837bf1075e4af51d748e03796cf1&language=en-US'
     );
     var response = await http.get(URL);
     if (response.statusCode == 200) {
       var movie = jsonDecode(response.body);
-      return movie.map((movie) => Movie.fromMap(movie));
+      return Movie.fromMap(movie);
     }
     else {
       return null;
     }
   }
 
-  Future<String?> getMovieTrailer(int idMovie) async {
+  static Future<String?> getMovieTrailer(int idMovie) async {
     var URL = Uri.parse(
       'https://api.themoviedb.org/3/movie/$idMovie/videos?api_key=2f8c837bf1075e4af51d748e03796cf1&language=en-US'
     );
     var response = await http.get(URL);
     if (response.statusCode == 200) {
-      var movieVideo = jsonDecode(response.body)['results'][0];
-      return movieVideo['key'];
+      var movieVideo = jsonDecode(response.body)['results'] as List;
+      for (var element in movieVideo) {
+        if (element['type'] == 'Trailer' && element['official'] == true) {
+          return element['key'];
+        }
+      }
+      return 'VUArb3AIpm4&t';
     }
     else {
       return null;
     }
   }
 
-  Future<List<Cast>?> getCast(int idMovie) async {
+  static Future<List<Cast>?> getCast(int idMovie) async {
     var URL = Uri.parse(
       'https://api.themoviedb.org/3/movie/$idMovie/credits?api_key=2f8c837bf1075e4af51d748e03796cf1&language=en-US'
     );

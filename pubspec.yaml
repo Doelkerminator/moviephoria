@@ -20,6 +20,8 @@ dependencies:
   splash_screen_view: ^3.0.0
   path_provider: ^2.0.9
   http: ^0.13.4
+  youtube_player_flutter: ^8.0.0
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -44,6 +46,8 @@ flutter:
 #Assets
   assets:
     - assets/images/popcorn.png
+    - assets/images/error.png
+    - assets/images/loading.gif
 
 #Fonts
   fonts:
@@ -56,3 +60,6 @@ flutter:
         - asset: assets/fonts/Candara/Candara_Bold.ttf
         - asset: assets/fonts/Candara/Candara_Italic.ttf
         - asset: assets/fonts/Candara/Candara.ttf
+    - family: Inlanders
+      fonts:
+        - asset: assets/fonts/Inlanders/Inlanders.otf

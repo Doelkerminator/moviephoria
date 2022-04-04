@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       routes: getApplicationRoutes(),
       home: SplashScreenView(
         navigateRoute: const MovieList(),
-        duration: 600,
+        duration: 800,
         imageSize: 150,
         imageSrc: "assets/images/popcorn.png",
         text: 'MoviePhoria',

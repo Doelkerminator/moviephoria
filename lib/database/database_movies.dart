@@ -6,20 +6,21 @@ import 'package:path/path.dart';
 import '../models/Movie.dart';
 
 class DatabaseMovies {
-  static const _nameDB = 'MovieDB';
+  static const _nameDB = 'MoviesDB';
   static const _versionDB = 1;
 
   static Database? _database;
-  Future<Database?> get database async {
+  static Future<Database?> get database async {
     if (_database != null) return _database;
 
     _database = await _initDatabase();
     return _database;
   }
 
-  _initDatabase() async {
+  static _initDatabase() async {
     Directory folder = await getApplicationDocumentsDirectory();
     String routeDB = join(folder.path, _nameDB);
+    print(routeDB);
     return await openDatabase(
       routeDB,
       version: _versionDB,
@@ -27,36 +28,57 @@ class DatabaseMovies {
     );
   }
 
-  _createTables(Database db, int version) {
+  static matasteAMiPadre()  async{
+    var dbConnection = await database;
+    dbConnection!.delete('DROP DATABASE MovieDB');
+  }
+
+  static _createTables(Database db, int version) {
     db.execute(
-      "CREATE TABLE fav_movies (backdropPath varchar(150),"
+      "CREATE TABLE fav_movies ("
+          "backdrop_path varchar(150),"
           "id integer primary key,"
-          "originalLanguage varchar(30),"
-          "originalTitle varchar(50),"
+          "original_language varchar(30),"
+          "original_title varchar(50),"
           "overview varchar(500),"
           "popularity real,"
-          "posterPath varchar(60),"
-          "releaseDate varchar(15),"
+          "poster_path varchar(60),"
+          "release_date varchar(15),"
           "title varchar(40),"
-          "voteAverage real,"
-          "voteCount integer)"
+          "vote_average real,"
+          "vote_count integer);"
     );
   }
 
-  Future<int> insert(Map<String, dynamic> row) async {
+  static void insert(Map<String, dynamic> row) async {
     var dbConnection = await database;
-    return dbConnection!.insert("fav_movies", row);
+    print('Melocomi: $row');
+    dbConnection!.insert("fav_movies", row);
   }
 
-  Future<int> delete(int idMovie) async {
+  static void delete(int idMovie) async {
     var dbConnection = await database;
-    return dbConnection!
-        .delete("fav_movies", where: "idMovie = ?", whereArgs: [idMovie]);
+    print('Loborre');
+    dbConnection!.delete("fav_movies", where: "id = ?", whereArgs: [idMovie]);
   }
 
-  Future<List<Movie>> getAllFavMovies() async {
+  static Future<List<Movie>> getAllFavMovies() async {
     var dbConnection = await database;
     var result = await dbConnection!.query("fav_movies");
+    print(result);
     return result.map((movie) => Movie.fromMap(movie)).toList();
+  }
+
+  static Future<bool> isFavorite(int idMovie) async {
+    var dbConnection = await database;
+    int? ye = Sqflite.firstIntValue(await dbConnection!.rawQuery('SELECT COUNT(*) FROM fav_movies WHERE id = $idMovie'));
+    if(ye == 1) {
+      print('Megusta');
+      return true;
+    }
+    else {
+      print('Nomegusta');
+      return false;
+    }
   }
 }

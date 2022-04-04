@@ -46,17 +46,17 @@ class Movie {
 
   Map<String, dynamic> toMap() {
     return {
-      'backdropPath' : backdropPath,
+      'backdrop_path' : backdropPath,
       'id' : id,
-      'originalLanguage' : originalLanguage,
-      'originalTitle' : originalTitle,
+      'original_language' : originalLanguage,
+      'original_title' : originalTitle,
       'overview' : overview,
       'popularity' : popularity,
-      'posterPath' : posterPath,
-      'releaseDate' : releaseDate,
+      'poster_path' : posterPath,
+      'release_date' : releaseDate,
       'title' : title,
-      'voteAverage' : voteAverage,
-      'voteCount' : voteCount,
+      'vote_average' : voteAverage,
+      'vote_count' : voteCount,
     };
   }
 }
